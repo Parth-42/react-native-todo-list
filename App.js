@@ -9,16 +9,16 @@ export default function App() {
 
   const [input, setInput] = useState("")
   const [todos, setTodos] = useState([
-          {id: 1, text: 'Do homework', isCompleted: false},
-          {id: 2, text: 'Wash Car', isCompleted: false},
-          {id: 3, text: 'Get stuff', isCompleted: false}
+          {id: "1", text: 'Do homework', isCompleted: false},
+          {id: "2", text: 'Wash Car', isCompleted: false},
+          {id: "3", text: 'Get stuff', isCompleted: false}
   ])
 
   const onPress = () => {
 
       if(input !== ""){
         const todo = {
-          id: Math.random(),
+          id: Math.random().toString(),
           text: input,
           isCompleted: false
         }
@@ -43,6 +43,11 @@ export default function App() {
     setTodos(updatedTodos)
   }
  
+  const deleteTodo = (id) => {
+    const updatedTodos = todos.filter(todo => todo.id !== id)
+    setTodos(updatedTodos)
+  }
+
   return (
       <View style={styles.container}>
         <Text style={styles.title}>Todo List App</Text>
@@ -57,14 +62,14 @@ export default function App() {
             style={styles.button}
             onPress={onPress}
           >
-            <Text>Click me</Text>
+            <Text>Add Todo</Text>
           </TouchableOpacity>
       </View>
 
       <View style={styles.list}>
       <FlatList
         data={todos}
-        renderItem={({item}) =>  <Todo item={item} index={todos.indexOf(item)} toggleTodo={toggleTodo}/>}
+        renderItem={({item}) =>  <Todo item={item} index={todos.indexOf(item)} toggleTodo={toggleTodo} deleteTodo={deleteTodo}/>}
       />
       </View>
       </View>

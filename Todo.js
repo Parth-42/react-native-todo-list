@@ -2,16 +2,16 @@ import React from 'react';
 import { StyleSheet, Text, View, CheckBox} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-const Todo = ({item, index, toggleTodo}) => {
+const Todo = ({item, index, toggleTodo, deleteTodo}) => {
 
     return (
         <View style={[styles.todo], [styles.todo, {backgroundColor: index % 2 == 0  ? "#f2f2f2" : "#FFFFFF"}]}>
-            <Text style={styles.text}>{item.text}</Text>
-            {/* <Icon style={styles.icon} name="check"color="green" onPress={onPress}/> */}
-            <CheckBox style={styles.icon}
+            <CheckBox style={styles.checkbox}
                 value={item.isCompleted}
                 onValueChange={() => toggleTodo(item.id)}
             />
+            <Text style={[styles.text], [styles.text, item.isCompleted ? {textDecorationLine: "line-through"} : {}]}>{item.text}</Text>
+            <Icon style={styles.delete} name="trash" color="red" onPress={() => deleteTodo(item.id)}/>
         </View>
     )
 }
@@ -31,8 +31,12 @@ const styles = StyleSheet.create({
         width: 200,
     },
 
-    icon: {
-        fontSize: 20,
+    checkbox: {
+        alignSelf: "center"
+    },
+
+    delete: {
+        fontSize: 22,
         alignSelf: "center",
         paddingRight: 10
     }
